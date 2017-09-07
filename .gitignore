@@ -1,8 +1,11 @@
 test_dataset
 data
 .ipynb_checkpoints
+code/.ipynb_checkpoints/
 *.h5
 models
 model
 *.swp
 *.p
+__pycache__
+code/__pycache__/
