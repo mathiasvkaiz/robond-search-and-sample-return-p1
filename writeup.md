@@ -29,6 +29,13 @@
 [image5]: ./misc/process_image.png
 [image6]: ./misc/map.png
 [image7]: ./misc/worldmap.png
+[image8]: ./misc/decision.png
+[image9]: ./misc/decisiontree.png
+[image10]: ./misc/source_destination.png
+[image11]: ./misc/rover_vision.png
+[image12]: ./misc/angles.png
+
+
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -90,6 +97,35 @@ After that the area  "rock_map = find_rocks(warped, levels=(110, 110, 50))" defi
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
+
+**decision_step** function
+![alt text][image8]
+
+is based on following decision tree
+![alt text][image9]
+
+
+**perception_step** function
+Is based on the **porcess_image** function out of the notebook. It takes over nearly all steps with some slightly differences that are explained now.
+
+
+Here the source area and destination array is defined so that we can perform the perspective transformation.
+![alt text][image10]
+
+Here the rover vision image is updated
+![alt text][image11]
+
+In general all position and yaw values are from Rover class now.
+Also the worldmap is updated in Rover class as well.
+
+
+Also we now calculate the polar coordinates and distance of the pixel.
+![alt text][image11]
+
+
+
+
+
 
 
 
