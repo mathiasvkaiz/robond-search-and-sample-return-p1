@@ -34,6 +34,7 @@
 [image10]: ./misc/source_destination.png
 [image11]: ./misc/rover_vision.png
 [image12]: ./misc/angles.png
+[image13]: ./misc/rock_detection_3.png
 
 
 
@@ -117,10 +118,21 @@ Here the rover vision image is updated
 
 In general all position and yaw values are from Rover class now.
 Also the worldmap is updated in Rover class as well.
+To favour navigatable terrain we changed the Red And Blue Channel update to
+
+Rover.worldmap[y_world, x_world, 2] += 10
+Rover.worldmap[obs_y_world, obs_x_world, 0] += 1
+
+So we add 10 each time we discover navigatable terrain and 1 each time we detect and obstacle.
+
 
 
 Also we now calculate the polar coordinates and distance of the pixel.
-![alt text][image11]
+![alt text][image12]
+Then we update the Rovers angle so that the **decision_step** function can work with that information
+
+For the rock detection step more code is added as the rocks also have a vertical space. So get the minimal distance to rock and define it as center point.
+![alt text][image13]
 
 
 
@@ -136,8 +148,32 @@ Also we now calculate the polar coordinates and distance of the pixel.
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
+I used following settings:
+1024x768
+Good
+Windowed
+
+My apporach is to seperate between navigatable and non navigatable space and transforming the image from the camera to a top down view. Based on info of navigatable space and the top down view i can build a map of all image frames coming in from the rover cameras and compare it with the world map.
+
+Following techniques were used:
+- Image perspective transformation given by openCV framework
+- Color thresholding for seperating navigatable and non navigatable space on al RGB channels
+- Coordination processing (e.g. Polar coordinates and distance)
+- Angle adjustment
+- Mapping of coordinates to map
+- Coloring the map in different colors (Red and Blue) for navigatable and non navigatable space
+- Simple decision tree for decision making
+
+Checking the autonomous mode i can see that the rover not always behaves like wanted. Sometimes it gets stuck in an obstacle or cannot proceed navigating on free terrain (driving around in circles can happen).
+I would say that a very good starting point for improvement is a much more sophisticated hanlding of obstacle and free space overlaps. In this simple version i have just removed all obstacle values in case a free space value is also given. This could be handled much better in future. 
+
+We have to consider that not is not alwys possible to have a clear difference in pixel values for navigatable and non navigatable space. Here we could also use a much more sophisticated apporach by using filters and so on.
+
+For decision making a much complicated decision tree could also avoid bugs in autonomous movement. Or even other techniques like Deep Learning (as in the Self-Driving Car Course) could be applied as well.
+
+So we have much space for improvements in future.
 
 
-![alt text][image3]
+
 
 
