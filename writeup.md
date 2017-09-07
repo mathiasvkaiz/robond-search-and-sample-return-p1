@@ -26,9 +26,9 @@
 [image2]: ./misc/color_thresholdin_2.png
 [image3]: ./misc/rock_detection.png
 [image4]: ./misc/rock_detection_2.png
-
-[image5]: ./calibration_images/example_grid1.jpg
-[image5]: ./calibration_images/example_rock1.jpg 
+[image5]: ./misc/process_image.png
+[image6]: ./misc/map.png
+[image7]: ./misc/worldmap.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -65,9 +65,33 @@ Following images shows the calling of the rock detection and mapping to the worl
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 
+![alt text][image5]
+
+In this method all relevant functions are applied. 
+
+First we use **perspect_transform** to switch the robot image to an above image. We threshold the returend warped array. After that we create the obtsalce map based on the thresholded navigatable values. In this step we also use the second return array of **perspect_transform** (mask) to be multiplied with the threshed navigatable values. So the 0 and 1 of the mask (defining the visible range) are regarded. As a result we get 1 everywhere we have obstacles.
+
+After that we convert to rover coordinates **rover_coords**.
+With that information and the given worldmap we build the world based on coords, position, yaw and map with **pix_to_world** function.
+This step is done for navigatable space and obstacle space
+![alt text][image6]
+
+After that we are able to update the worldmap. Based on world and obstacle world channels we update the blue channel wehre we can navigate to and the red channel where obstacles are placed.
+![alt text][image7]
+
+Here we could get some confilcts between navigatable cpace and obstacle space so that is why a "normalization" is used. Navigatable space beats obstacle space by setting the red channel to 0 if we have a value of blue channel (navigatable space) greater than 0.
+
+After that the area  "rock_map = find_rocks(warped, levels=(110, 110, 50))" defines where to map rocks on the worldmap in case we have found a rock.
+
+
+
+
+
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
+
+
 
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
