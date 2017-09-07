@@ -24,9 +24,11 @@
 
 [image1]: ./misc/color_thresholdin.png
 [image2]: ./misc/color_thresholdin_2.png
+[image3]: ./misc/rock_detection.png
+[image4]: ./misc/rock_detection_2.png
 
-[image2]: ./calibration_images/example_grid1.jpg
-[image3]: ./calibration_images/example_rock1.jpg 
+[image5]: ./calibration_images/example_grid1.jpg
+[image5]: ./calibration_images/example_rock1.jpg 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -40,6 +42,8 @@ You're reading it and here is a link to my [project code](https://github.com/mat
 
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
+As the obstacles on the map are dark areas (and this can be said for all three color channels RGB) and navigatebale area instead is quite bright we can separate obstacles and navigatable space by definined a color threshold.
+
 ![alt text][image1]
 At this code snippet in the notebook we identify the obstacles by defining a threshold border with rgb_thresh parameter. Afterthat we analyze all three RGB channels separately and check if the given pixel value is above or below the threshold. If this is the case we set a 1 as value in the array (that has the same size as the image) or an 0 if it is below the threshold (done on array initialization -> color_select = np.zeros_like(img[:,:,0]))
 
@@ -47,10 +51,20 @@ At this code snippet in the notebook we identify the obstacles by defining a thr
 Here the defined function "color_thresh" is called and the values for definig obstacles are set.
 
 
-#### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
+For rock identification a new function is added
+![alt text][image3]
 
-![alt text][image2]
+In this function we also have defined a threshold for each RGB channel "levels=(110,110,50)".
+The we compare eah RGB cnalle value and defined 1 or 0 based on the logic
+pixel value greater than R channel threshold, greater than G-channel threshold and smaller than B-channel threshold.
+
+
+Following images shows the calling of the rock detection and mapping to the world map
+![alt text][image4]
+
+
+#### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
+
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
