@@ -46,7 +46,7 @@
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  
 
-You're reading it and here is a link to my [project code](https://github.com/mathiasvkaiz/robond-search-and-sample-return-p1/code/Search_And_Sample_Return.ipynb)
+You're reading it and here is a link to my [project code](https://github.com/mathiasvkaiz/robond-search-and-sample-return-p1/blob/master/code/Search_And_Sample_Return.ipynb)
 
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
