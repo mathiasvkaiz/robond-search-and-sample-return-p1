@@ -22,7 +22,9 @@
 
 [//]: # (Image References)
 
-[image1]: ./misc/rover_image.jpg
+[image1]: ./misc/color_thresholdin.png
+[image2]: ./misc/color_thresholdin_2.png
+
 [image2]: ./calibration_images/example_grid1.jpg
 [image3]: ./calibration_images/example_rock1.jpg 
 
@@ -34,13 +36,16 @@
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  
 
-You're reading it!
+You're reading it and here is a link to my [project code](https://github.com/mathiasvkaiz/robond-search-and-sample-return-p1/code/Search_And_Sample_Return.ipynb)
 
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
-Here is an example of how to include an image in your writeup.
-
 ![alt text][image1]
+At this code snippet in the notebook we identify the obstacles by defining a threshold border with rgb_thresh parameter. Afterthat we analyze all three RGB channels separately and check if the given pixel value is above or below the threshold. If this is the case we set a 1 as value in the array (that has the same size as the image) or an 0 if it is below the threshold (done on array initialization -> color_select = np.zeros_like(img[:,:,0]))
+
+![alt text][image2]
+Here the defined function "color_thresh" is called and the values for definig obstacles are set.
+
 
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 And another! 
