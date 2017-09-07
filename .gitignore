@@ -1,1 +1,8 @@
 test_dataset
+data
+.ipynb_checkpoints
+*.h5
+models
+model
+*.swp
+*.p
